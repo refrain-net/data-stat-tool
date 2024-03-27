@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>data-stat-tool</title>
+    <link href="style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="wrapper">
+      <canvas id="canvas" width="1200" height="800"></canvas>
+      <div id="options-section">
+        <fieldset>
+          <legend>オプション</legend>
+          <table border="1" width="100%">
+            <tr>
+              <td>
+                <input id="picker" type="file" accept="">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <select id="lb_sheet-name">
+                  <option hidden>シートを選択</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input id="cb_show-histogram" type="checkbox" checked="true">
+                <label for="cb_show-histogram">ヒストグラムを表示する</label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input id="cb_show-norm" type="checkbox" checked="true">
+                <label for="cb_show-norm">正規分布を表示する</label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input id="cb_show-boxplot" type="checkbox" checked="true">
+                <label for="cb_show-boxplot">箱ひげ図を表示する</label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input id="cb_show-outrange-count" type="checkbox" checked="true">
+                <label for="cb_show-outrange-count">規格外れ数を表示する</label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="lower-std-lim">規格下限値</label>
+                <input id="tb_lower-std-lim" type="number" value="0">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <label for="tb_upper-std-lim">規格下限値</label>
+                <input id="tb_upper-std-lim" type="number" value="10">
+              </td>
+            </tr>
+          </table>
+        </fieldset>
+      </div>
+      <div id="dataview-section">
+        <fieldset>
+          <legend>データ詳細</legend>
+          <table border="1">
+          </table>
+        </fieldset>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
