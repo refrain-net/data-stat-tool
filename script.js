@@ -1,4 +1,96 @@
 'use strict';
+/** DEFINE VARIABLE */
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const lbSheetName= document.getElementById('lb_sheet-name');
+const cbShowHistogram = document.getElementById('cb_show-histogram');
+const cbShowNorm = document.getElementById('cb_show-norm');
+const cbShowBoxplot = document.getElementById('cb_show-boxplot');
+const cbShowOutrange = document.getElementById('cb_show-outrange');
+const tbLowerStdLim = document.getElementById('tb_lower-std-lim');
+const tbUpperStdLim = document.getElementById('tb_upper-std-lim');
+
+const data = [{v: 0}, {v: 0}, {v: 0}, {v: 1}, {v: 1}, {v: 1}, {v: 1}, {v: 2}, {v: 3}, {v: 3}, {v: 3}, {v: 5}, {v: 5}, {v: 10}]; // cells
+
+
+const config = {
+  lsl: 0, usl: 0,
+  graph: {
+    font_size: 32,
+    axis: {width: 2, color: 'black'},
+    x_label: {font_size: 32, height: 64, min: 0, max: 0},
+    y_label: {font_size: 32, width: 64, min: 0, max: 0}
+  },
+  histogram: {step: 1, count: 0},
+  visible: {
+    histogram: true, boxplot: true, norm: true, outrange: false
+  }
+};
+
+/** DEFINE FUNCTION */
+/**
+ * @function init イベントの登録などの初期化を行う
+ */
+function init () {
+  cbShowHistogram.addEventListener('change', onChange, false);
+  cbShowNorm.addEventListener('change', onChange, false);
+  cbShowBoxplot.addEventListener('change', onChange, false);
+  cbShowOutrange.addEventListener('change', onChange, false);
+  tbLowerStdLim.addEventListener('change', onChange, false);
+  tbUpperStdLim.addEventListener('change', onChange, false);
+}
+/**
+ * @function setup 設定データの更新などを行う
+ * 1. データの上下限値の取得
+ * 2. lsl/uslの読み取り
+ * 3. グラフ上下限の設定
+ * 4. ヒストグラムの分布数の設定
+ * 5. 表示設定
+ */
+function setup () {
+  // (1)
+  const sorted = data.sort((a, b) => a.v - b.v);
+  const min = sorted[0];
+  const max = sorted.at(-1);
+  // (2)
+  config.lsl = parseFloat(tbLowerStdLim.value);
+  config.usl = parseFloat(tbUpperStdLim.value);
+  // (3)
+  config.graph.x_label.min = Math.min(config.lsl, min - min % config.histogram.step);
+  config.graph.x_label.max = Math.min(config.usl, max - max % config.histogram.step);
+  // (4)
+  config.histogram.count = config.graph.x_label.max - config.graph.x_label.min + 1;
+  // (5)
+  config.visible.histogram = cbShowHistogram.checked;
+  config.visible.boxplot = cbShowBoxplot.checked;
+  config.visible.norm = cbShowNorm.checked;
+  config.visible.outrange = cbShowOutrange.checked;
+}
+function update () {
+
+}
+
+
+/** DEFINE EVENT-HANDLER */
+function onChange (event) {
+  switch (this) {
+    // case lbSheetName:
+      // load_data();
+    case cbShowHistogram:
+    case cbShowNorm:
+    case cbShowBoxplot:
+    case cbShowOutrangeCount:
+    case tbLowerStdLim:
+    case tbUpperStdLim:
+      setup();
+      update();
+      break;
+  }
+}
+
+
+
+/**
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const lbSheetName= document.getElementById('lb_sheet-name');
@@ -148,3 +240,4 @@ function onChange (event) {
       break;
   }
 }
+*/
